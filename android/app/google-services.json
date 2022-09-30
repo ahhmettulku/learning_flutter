@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1062839427745",
+    "project_id": "learning-flatter",
+    "storage_bucket": "learning-flatter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062839427745:android:9d78edd5a071e58c1586e0",
+        "android_client_info": {
+          "package_name": "com.example.learning_flutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062839427745-2mstrbq7avf87iguek1mesfr7llf4jev.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXrXzfQMlvV2vk671oLNbRHzjsCFq1vj0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062839427745-2mstrbq7avf87iguek1mesfr7llf4jev.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
