@@ -1,3 +1,5 @@
+import 'dart:js';
+import 'dart:math';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -35,15 +37,57 @@ class HomePage extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
+              /*
               final user = FirebaseAuth.instance.currentUser;
               if (user != null && user.emailVerified) {
-                print("Your email is verified");
-              } else {
-                print("Your email hasn't verified yet");
+                return const Text("Your email has been verified");
+              } else if (user != null && !user.emailVerified) {
+                return const VerifyEmailView();
               }
+              print(user);
               return const Text("Done");
+              */
+              return Center(
+                child: Row(
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: OutlinedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const LoginView()));
+                            },
+                            child: const Text("Login"),
+                          ),
+                        )
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterView()));
+                            },
+                            child: const Text("Register"),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              );
             default:
-              return const Text('Loading...');
+              return const CircularProgressIndicator();
           }
         },
       ),
