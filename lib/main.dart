@@ -1,6 +1,3 @@
-import 'dart:js';
-import 'dart:math';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_flutter/views/login_view.dart';
@@ -14,9 +11,11 @@ void main() {
     MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+          //scaffoldBackgroundColor: Color.fromRGBO(69, 121, 212, 100),
+          //primarySwatch: Colors.purple,
+          appBarTheme: AppBarTheme(color: Color.fromRGBO(2, 119, 189, 1))),
       home: const HomePage(),
+      debugShowCheckedModeBanner: false,
     ),
   );
 }
@@ -88,6 +87,7 @@ class HomePage extends StatelessWidget {
               );
             default:
               return const CircularProgressIndicator();
+            //return const AppHomeView();
           }
         },
       ),
