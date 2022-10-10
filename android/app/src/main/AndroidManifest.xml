@@ -3,7 +3,7 @@
    <application
         android:label="learning_flutter"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/nps_logo_transparent">
         <activity
             android:name=".MainActivity"
             android:exported="true"

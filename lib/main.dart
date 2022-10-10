@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_flutter/views/login_view.dart';
 import 'package:learning_flutter/views/register_view.dart';
@@ -11,9 +12,11 @@ void main() {
     MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-          //scaffoldBackgroundColor: Color.fromRGBO(69, 121, 212, 100),
-          //primarySwatch: Colors.purple,
-          appBarTheme: AppBarTheme(color: Color.fromRGBO(2, 119, 189, 1))),
+        //scaffoldBackgroundColor: Color.fromRGBO(69, 121, 212, 100),
+        //primarySwatch: Colors.purple,
+        appBarTheme: AppBarTheme(color: Color.fromRGBO(2, 119, 189, 1)),
+        //platform: TargetPlatform.iOS,
+      ),
       home: const HomePage(),
       debugShowCheckedModeBanner: false,
     ),

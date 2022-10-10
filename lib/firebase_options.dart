@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1062839427745',
     projectId: 'learning-flatter',
     storageBucket: 'learning-flatter.appspot.com',
-    iosClientId: '1062839427745-13uqouc9cnm5dopog6tuboa26j9v6mcm.apps.googleusercontent.com',
+    iosClientId:
+        '1062839427745-13uqouc9cnm5dopog6tuboa26j9v6mcm.apps.googleusercontent.com',
     iosBundleId: 'com.example.learningFlutter',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '1062839427745',
     projectId: 'learning-flatter',
     storageBucket: 'learning-flatter.appspot.com',
-    iosClientId: '1062839427745-13uqouc9cnm5dopog6tuboa26j9v6mcm.apps.googleusercontent.com',
+    iosClientId:
+        '1062839427745-13uqouc9cnm5dopog6tuboa26j9v6mcm.apps.googleusercontent.com',
     iosBundleId: 'com.example.learningFlutter',
   );
 }
