@@ -69,13 +69,18 @@ class _LoginViewState extends State<LoginView> {
                     email: email,
                     password: password,
                   );
+                  /*
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                       builder: (context) => const NotesView(),
                     ),
                     (route) => false,
-                  );
+                  );*/
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                          builder: (context) => const NotesView()),
+                      (route) => false);
                 } on FirebaseAuthException catch (e) {
                   // if error is a firebase error
                   if (e.code == 'user-not-found') {

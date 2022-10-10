@@ -14,7 +14,7 @@ void main() {
       theme: ThemeData(
         //scaffoldBackgroundColor: Color.fromRGBO(69, 121, 212, 100),
         //primarySwatch: Colors.purple,
-        appBarTheme: AppBarTheme(color: Color.fromRGBO(2, 119, 189, 1)),
+        appBarTheme: const AppBarTheme(color: Color.fromRGBO(2, 119, 189, 1)),
         //platform: TargetPlatform.iOS,
       ),
       home: const HomePage(),
