@@ -78,8 +78,10 @@ class _RegisterViewState extends State<RegisterView> {
                   } else {
                     error = e.code;
                   }
-                  showErrorDialog(context, error);
+                } catch (e) {
+                  error = e.toString();
                 }
+                await showErrorDialog(context, error);
               },
               child: const Text('Register'),
             ),

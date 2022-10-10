@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_flutter/main.dart';
@@ -65,10 +67,35 @@ class _LoginViewState extends State<LoginView> {
                 final password = _password.text;
                 var error;
                 try {
-                  await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  final userCredential =
+                      await FirebaseAuth.instance.signInWithEmailAndPassword(
                     email: email,
                     password: password,
                   );
+
+                  if (userCredential.user?.emailVerified == false) {
+                    print('email is not verified');
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text('Error'),
+                            content: const Text('Your email is not verified'),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {},
+                                  child: const Text(
+                                      'Send email verification code'))
+                            ],
+                          );
+                        });
+                  } else if (userCredential.user?.emailVerified == true) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                            builder: (context) => const NotesView()),
+                        (route) => false);
+                  }
+
                   /*
                   Navigator.pushAndRemoveUntil(
                     context,
@@ -77,10 +104,6 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     (route) => false,
                   );*/
-                  Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(
-                          builder: (context) => const NotesView()),
-                      (route) => false);
                 } on FirebaseAuthException catch (e) {
                   // if error is a firebase error
                   if (e.code == 'user-not-found') {
