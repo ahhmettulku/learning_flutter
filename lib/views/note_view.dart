@@ -1,10 +1,10 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:learning_flutter/main.dart';
+import 'package:learning_flutter/services/auth/auth_exceptions.dart';
+import 'package:learning_flutter/services/auth/auth_service.dart';
+import 'package:learning_flutter/utilities/show_error_dialog.dart';
 
-enum MenuActions { logout }
+import '../enums/menu_action.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({super.key});
@@ -23,9 +23,9 @@ class _NotesViewState extends State<NotesView> {
           IconButton(
               onPressed: () async {
                 try {
-                  await FirebaseAuth.instance.signOut();
-                } on Exception catch (e) {
-                  print(e);
+                  await AuthService.firebase().logOut();
+                } on GenericAuthExceptions {
+                  showErrorDialog(context, 'Error occured');
                 }
                 print('User Has Signouted');
                 Navigator.pushAndRemoveUntil(
@@ -68,15 +68,15 @@ class _NotesViewState extends State<NotesView> {
                   print(shouldLogOut);
                   if (shouldLogOut) {
                     try {
-                      await FirebaseAuth.instance.signOut();
+                      await AuthService.firebase().logOut();
                       print('User has logged out');
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const HomePage()),
                           (route) => false);
-                    } on Exception catch (e) {
-                      print(e);
+                    } on GenericAuthExceptions {
+                      showErrorDialog(context, 'Error occured');
                     }
                   }
                   break;

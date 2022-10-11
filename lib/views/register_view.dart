@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:learning_flutter/services/auth/auth_exceptions.dart';
+import 'package:learning_flutter/services/auth/auth_service.dart';
 import 'package:learning_flutter/utilities/show_error_dialog.dart';
 import 'package:learning_flutter/views/note_view.dart';
 
@@ -61,27 +62,22 @@ class _RegisterViewState extends State<RegisterView> {
                 final password = _password.text;
                 var error;
                 try {
-                  final userCredential = await FirebaseAuth.instance
-                      .createUserWithEmailAndPassword(
-                          email: email, password: password);
+                  await AuthService.firebase()
+                      .createUser(email: email, password: password);
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(
                           builder: (context) => const NotesView()),
                       (route) => false);
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'weak-password') {
-                    error = e.code;
-                  } else if (e.code == 'email-already-in-use') {
-                    error = 'The account already exists for that email.';
-                  } else if (e.code == 'invalid-email') {
-                    error = 'Invalid email';
-                  } else {
-                    error = e.code;
-                  }
-                } catch (e) {
-                  error = e.toString();
+                } on WeakPasswordAuthException {
+                  showErrorDialog(context, 'Weak Password');
+                } on EmailAlreadyInUseAuthException {
+                  showErrorDialog(
+                      context, 'The account already exists for this email');
+                } on InvalidEmailAuthException {
+                  showErrorDialog(context, 'Invalid email');
+                } on GenericAuthExceptions {
+                  showErrorDialog(context, 'Signup Error');
                 }
-                await showErrorDialog(context, error);
               },
               child: const Text('Register'),
             ),

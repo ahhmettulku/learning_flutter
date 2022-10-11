@@ -1,8 +1,7 @@
-import 'dart:html';
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:learning_flutter/main.dart';
+import 'package:learning_flutter/services/auth/auth_exceptions.dart';
+import 'package:learning_flutter/services/auth/auth_service.dart';
 import 'package:learning_flutter/views/register_view.dart';
 import '../utilities/show_error_dialog.dart';
 import 'note_view.dart';
@@ -67,13 +66,12 @@ class _LoginViewState extends State<LoginView> {
                 final password = _password.text;
                 var error;
                 try {
-                  final userCredential =
-                      await FirebaseAuth.instance.signInWithEmailAndPassword(
+                  final userCredential = await AuthService.firebase().logIn(
                     email: email,
                     password: password,
                   );
 
-                  if (userCredential.user?.emailVerified == false) {
+                  if (userCredential.isEmailVerified == false) {
                     print('email is not verified');
                     showDialog(
                         context: context,
@@ -89,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                             ],
                           );
                         });
-                  } else if (userCredential.user?.emailVerified == true) {
+                  } else if (userCredential.isEmailVerified == true) {
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                             builder: (context) => const NotesView()),
@@ -104,34 +102,18 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     (route) => false,
                   );*/
-                } on FirebaseAuthException catch (e) {
-                  // if error is a firebase error
-                  if (e.code == 'user-not-found') {
-                    error = ('No user found for that email.');
-                  } else if (e.code == 'wrong-password') {
-                    error = ('Wrong password provided for that user.');
-                  } else if (e.code == 'invalid-email') {
-                    error = ('There is no user found with that email.');
-                  } else if (e.code == 'user-disabled') {
-                    error = ('Account has been disabled.');
-                  } else {
-                    error = (e.code);
-                  }
-                  /*
-                  return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                          title: const Text('Error'),
-                          content: Text(error),
-                        );
-                      });
-                      */
-                  return await showErrorDialog(context, error);
-                } catch (e) {
-                  // if the error is not a firebase error
-                  error = e.toString();
-                  await showErrorDialog(context, error);
+                } on UserNotFoundAuthException {
+                  await showErrorDialog(context, 'User Not Found');
+                } on WrongPasswordAuthException {
+                  await showErrorDialog(
+                      context, 'Wrong password provided for that user');
+                } on InvalidEmailAuthException {
+                  await showErrorDialog(
+                      context, 'There is no user found for that email');
+                } on UserDisabledAuthException {
+                  await showErrorDialog(context, 'Account Has Been Disabled');
+                } on GenericAuthExceptions {
+                  showErrorDialog(context, 'Authentication error');
                 }
               },
               child: const Text('Login'),
